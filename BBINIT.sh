@@ -29,8 +29,7 @@ sudo apt install httpie
 if [[ -z "$GOPATH" ]]
 then
     echo "Go is not installed. Installation in process..."
-    wget https://dl.google.com/go/go1.20.4.linux-amd64.tar.gz
-    sudo tar -xvf go1.20.4.linux-amd64.tar.gz
+    sudo apt install golang-go
     sudo mv go /usr/local
     export GOROOT=/usr/local/go
     export GOPATH=$HOME/go
@@ -46,7 +45,7 @@ fi
 cd /opt
 
 echo "Installing JSParser"
-git clone https://github.com/nahamsec/JSParser.git
+sudo git clone https://github.com/nahamsec/JSParser.git
 cd JSParser*
 sudo python setup.py install
 cd ..
@@ -54,18 +53,21 @@ sudo ln -s /opt/JSParser /usr/bin/JSParser
 
 
 echo "Installing dirsearch"
-git clone https://github.com/maurosoria/dirsearch.git
+sudo git clone https://github.com/maurosoria/dirsearch.git
 sudo ln -s /opt/dirsearch /usr/bin/dirsearch
 
 echo "installing httprobe"
-go get -u github.com/tomnomnom/httprobe 
+sudo go get -u github.com/tomnomnom/httprobe 
 echo "done"
 
 echo "Installing waybackurls"
-go install github.com/tomnomnom/waybackurls@latest
+sudo git clone https://github.com/tomnomnom/waybackurls.git
+cd waybackurls
+sudo go build main.go
+sudo ln -s /opt/waybackurls/main /usr/bin/waybackurls
 
 echo "Installing jwt_tool"
-git clone https://github.com/ticarpi/jwt_tool
+sudo git clone https://github.com/ticarpi/jwt_tool
 cd jwt_tool
 python3 -m pip install termcolor cprint pycryptodomex requests
 sudo chmod +x jwt_tool.py
